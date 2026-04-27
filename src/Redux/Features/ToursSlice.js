@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { baseurl } from "../../BaseUrl";
 import axios from "axios";
-import { retry } from "@reduxjs/toolkit/query";
 import { toast } from "react-toastify";
 
 export const getTours = createAsyncThunk(
@@ -119,7 +118,7 @@ export const toursSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(postTour.fulfilled, (state, action) => {
+      .addCase(postTour.fulfilled, (state) => {
         state.loading = false;
         state.success= true;
         toast.success('Tour Uploaded Successfully')

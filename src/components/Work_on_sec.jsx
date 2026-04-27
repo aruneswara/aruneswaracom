@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import AsciiBinaryFlow from "./Animation_code/AsciiBinaryFlow";
 import { gsap } from "gsap";
 const Work_on_sec = () => {

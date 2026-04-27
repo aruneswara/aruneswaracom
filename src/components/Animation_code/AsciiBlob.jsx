@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const AsciiBlob = () => {
   const [frame, setFrame] = useState(60);

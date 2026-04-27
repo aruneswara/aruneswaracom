@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useLocation, useNavigate, useRoutes } from "react-router-dom";
+import { useRoutes } from "react-router-dom";
 
 import Landing from "../pages/Landing";
 import Blogs from "../pages/Blogs";

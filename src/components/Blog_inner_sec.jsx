@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Get_in_touch_sec from "./Get_in_touch_sec";
 import blogService from "../Redux/blogService";
@@ -9,12 +9,7 @@ const Blog_inner_sec = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch single blog by ID
-  useEffect(() => {
-    fetchBlog();
-  }, [id]);
-
-  const fetchBlog = async () => {
+  const fetchBlog = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -26,7 +21,12 @@ const Blog_inner_sec = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
+
+  // Fetch single blog by ID
+  useEffect(() => {
+    fetchBlog();
+  }, [fetchBlog]);
 
   // Format date
   const formatDate = (dateString) => {
@@ -39,7 +39,7 @@ const Blog_inner_sec = () => {
     try {
       const parsed = JSON.parse(codeString);
       return JSON.stringify(parsed, null, 2);
-    } catch (e) {
+    } catch {
       return codeString;
     }
   };

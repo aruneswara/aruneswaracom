@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
  
-import { toast } from "react-toastify";
 import axios from "axios";
 import { baseurl } from "../../BaseUrl";
  
@@ -211,7 +210,7 @@ export const addorderSlice = createSlice({
         .addCase(updateorder.pending, (state) => {
           state.loading = true;
         })
-        .addCase(updateorder.fulfilled, (state, action) => {
+        .addCase(updateorder.fulfilled, (state) => {
           state.loading = false;
         
         })
@@ -247,4 +246,3 @@ export const addorderSlice = createSlice({
   // Export actions and reducers
   export const { logout } = addorderSlice.actions;
   export default addorderSlice.reducer;
-

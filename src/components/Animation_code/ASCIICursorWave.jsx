@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const ASCII_WAVE = ["0", "^", "*", "~", "-"]; // Wave characters
 const WAVE_LENGTH = 15; // Kitne characters ka wave

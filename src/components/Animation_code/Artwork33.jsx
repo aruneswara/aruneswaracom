@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const Artwork33 = () => {
   const canvasRef = useRef(null);
@@ -169,7 +169,6 @@ const Artwork33 = () => {
 };
 
 export default Artwork33;
-
 
 
 

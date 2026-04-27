@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Deletsvg } from "./Svg_components/Svg";
 import blogService from "../Redux/blogService";
-import { toast } from "react-toastify";
 
 const Blog_add_form = () => {
   const navigate = useNavigate();
@@ -73,7 +72,7 @@ const Blog_add_form = () => {
     if (practicalExample.code.trim()) {
       try {
         JSON.parse(practicalExample.code);
-      } catch (e) {
+      } catch {
         newErrors.code = "Code must be valid JSON";
       }
     }
@@ -167,7 +166,7 @@ const Blog_add_form = () => {
         furtherReading,
       };
 
-      const response = await blogService.createBlog(blogData);
+      await blogService.createBlog(blogData);
 
       setSubmitStatus({
         type: "success",

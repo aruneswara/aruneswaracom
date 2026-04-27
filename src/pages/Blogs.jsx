@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Blog_Sec from "../components/Blog_Sec";
 import Get_in_touch_sec from "../components/Get_in_touch_sec";
 

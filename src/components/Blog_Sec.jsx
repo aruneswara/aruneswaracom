@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Arrowsvg } from "./Svg_components/Svg";
 import blogService from "../Redux/blogService";
@@ -12,12 +12,7 @@ const Blog_Sec = () => {
   // Tab names
   const tabs = ["All", "Backend", "API Design", "Systems", "Engineering"];
 
-  // Fetch blogs from API
-  useEffect(() => {
-    fetchBlogs();
-  }, []);
-
-  const fetchBlogs = async () => {
+  const fetchBlogs = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -29,7 +24,12 @@ const Blog_Sec = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  // Fetch blogs from API
+  useEffect(() => {
+    fetchBlogs();
+  }, [fetchBlogs]);
 
   // Filter blogs based on active tab
   const getFilteredBlogs = () => {
@@ -58,7 +58,7 @@ const Blog_Sec = () => {
             </div>
             <div className="blog_Sec_top_heading">
               <h2>Writing</h2>
-              <p>Notes on software engineering, systems, and things I'm learning.</p>
+              <p>Notes on software engineering, systems, and things I&apos;m learning.</p>
             </div>
           </div>
 

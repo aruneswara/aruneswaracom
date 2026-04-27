@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
+
+const WATER_CHARACTERS = "~≈#0</>◟*◝";
+const WATER_ROWS = 25;
+const WATER_COLS = 52;
+const WATER_CENTER = { x: 0.5, y: 0.5 };
+const TWO_PI = Math.PI * 2;
 
 /* Custom hook for animation frame */
 const useAnimationFrame = (callback, isRunning = true) => {
@@ -33,14 +39,6 @@ const WaterAscii = () => {
   const [frame, setFrame] = useState(0);
   const mouseRef = useRef({ x: 0.5, y: 0.5 });
 
-  const characters = "~≈#0</>◟*◝";
-  const rows = 25;
-  const cols = 52;
-
-  const center = { x: 0.5, y: 0.5 };
-  const charLen = characters.length;
-  const pi2 = Math.PI * 2;
-
   /* Mouse tracking */
   useEffect(() => {
     const move = (e) => {
@@ -70,16 +68,16 @@ const WaterAscii = () => {
     const mx = mouseRef.current.x;
     const my = mouseRef.current.y;
 
-    for (let y = 0; y < rows; y++) {
+    for (let y = 0; y < WATER_ROWS; y++) {
       let row = "";
       let opacity = 1;
 
-      for (let x = 0; x < cols; x++) {
-        const nx = x / cols;
-        const ny = y / rows;
+      for (let x = 0; x < WATER_COLS; x++) {
+        const nx = x / WATER_COLS;
+        const ny = y / WATER_ROWS;
 
-        const dx = nx - center.x;
-        const dy = ny - center.y;
+        const dx = nx - WATER_CENTER.x;
+        const dy = ny - WATER_CENTER.y;
         const dist = Math.sqrt(dx * dx + dy * dy);
 
         const mdx = nx - mx;
@@ -90,13 +88,13 @@ const WaterAscii = () => {
         const wave =
           Math.sin(x / 3 + y / 5 + f1 + dist * 10) +
           Math.cos(x / 4 - y / 3 - f2) +
-          Math.sin(f3 + nx * pi2) +
+          Math.sin(f3 + nx * TWO_PI) +
           Math.sin(mouseDist * 25 - frame * 0.3) * mouseForce * 2;
 
         const index =
           Math.floor(
-            Math.abs((wave + 2) * (charLen / 4) + dist * 5 + mouseForce * 6)
-          ) % charLen;
+            Math.abs((wave + 2) * (WATER_CHARACTERS.length / 4) + dist * 5 + mouseForce * 6)
+          ) % WATER_CHARACTERS.length;
 
         const op = Math.max(
           0.25,
@@ -104,7 +102,7 @@ const WaterAscii = () => {
         );
         opacity = (opacity + op) / 2;
 
-        row += characters[index];
+        row += WATER_CHARACTERS[index];
       }
 
       output.push({ text: row, opacity });

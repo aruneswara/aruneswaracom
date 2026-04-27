@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ReactFullpage from "@fullpage/react-fullpage";
 
 import Hero_sec from "../components/Hero_sec";

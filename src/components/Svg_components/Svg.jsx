@@ -1,6 +1,3 @@
-import React from "react";
-
-
 export const LogoSvg = () => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="164" height="14" viewBox="0 0 164 14" fill="none">
@@ -23,8 +20,8 @@ export const Arrowsvg = () => {
     return (
         <>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-  <path d="M19.1502 12H4.75" stroke="#1E1E1E" stroke-width="1.5" stroke-linecap="square"/>
-  <path d="M13.6992 5.97559L19.7492 11.9996L13.6992 18.0246" stroke="#1E1E1E" stroke-width="1.5" stroke-linecap="square"/>
+  <path d="M19.1502 12H4.75" stroke="#1E1E1E" strokeWidth="1.5" strokeLinecap="square"/>
+  <path d="M13.6992 5.97559L19.7492 11.9996L13.6992 18.0246" stroke="#1E1E1E" strokeWidth="1.5" strokeLinecap="square"/>
 </svg></>
     );
 };
@@ -33,6 +30,6 @@ export const Arrowsvg = () => {
 export const Deletsvg = () => {
     return (
         <>
-  <svg id="fi_6861362" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1"><path d="m170.8 14.221a14.21 14.21 0 0 1 14.2-14.207l141.991-.008a14.233 14.233 0 0 1 14.2 14.223v35.117h-170.391zm233.461 477.443a21.75 21.75 0 0 1 -21.856 20.33h-254.451a21.968 21.968 0 0 1 -21.854-20.416l-21.774-318.518h343.174l-23.234 318.6zm56.568-347.452h-409.658v-33a33.035 33.035 0 0 1 33.005-33.012l343.644-.011a33.051 33.051 0 0 1 33 33.02v33zm-270.79 291.851a14.422 14.422 0 1 0 28.844 0v-202.247a14.42 14.42 0 0 0 -28.839-.01v202.257zm102.9 0a14.424 14.424 0 1 0 28.848 0v-202.247a14.422 14.422 0 0 0 -28.843-.01z" fill="#fc0005" fill-rule="evenodd"></path></svg></>
+  <svg id="fi_6861362" height="512" viewBox="0 0 512 512" width="512" xmlns="http://www.w3.org/2000/svg" data-name="Layer 1"><path d="m170.8 14.221a14.21 14.21 0 0 1 14.2-14.207l141.991-.008a14.233 14.233 0 0 1 14.2 14.223v35.117h-170.391zm233.461 477.443a21.75 21.75 0 0 1 -21.856 20.33h-254.451a21.968 21.968 0 0 1 -21.854-20.416l-21.774-318.518h343.174l-23.234 318.6zm56.568-347.452h-409.658v-33a33.035 33.035 0 0 1 33.005-33.012l343.644-.011a33.051 33.051 0 0 1 33 33.02v33zm-270.79 291.851a14.422 14.422 0 1 0 28.844 0v-202.247a14.42 14.42 0 0 0 -28.839-.01v202.257zm102.9 0a14.424 14.424 0 1 0 28.848 0v-202.247a14.422 14.422 0 0 0 -28.843-.01z" fill="#fc0005" fillRule="evenodd"></path></svg></>
     );
 };
