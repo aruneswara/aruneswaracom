@@ -9,11 +9,10 @@ import ASCIICursorWave from "./components/Animation_code/ASCIICursorWave";
 
 function App() {
   return (
-    <BrowserRouter>
-      {/* Global wrapper to hide default cursor */}
-      <div style={{ cursor: "none" }}>
+    <BrowserRouter future={{ v7_relativeSplatPath: true, v7_startTransition: true }}>
+      <div className="app-shell">
         <Scroll />
-        <ASCIICursorWave /> {/* Blob cursor visible globally */}
+        <ASCIICursorWave />
 
         <Header />
         <Routes />

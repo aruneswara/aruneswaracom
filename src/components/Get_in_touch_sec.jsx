@@ -63,7 +63,7 @@ const Get_in_touch_sec = () => {
 
                         <div className="get_in_touch_sec_card animate-card">
                             <p>Email</p>
-                            <a href="">arun@example.com</a>
+                            <a href="mailto:aruneswara@icloud.com">aruneswara@icloud.com</a>
                         </div>
 
                         <div className="get_in_touch_sec_card animate-card">

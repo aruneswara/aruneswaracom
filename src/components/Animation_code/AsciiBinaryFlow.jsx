@@ -2,10 +2,12 @@ import { useEffect, useRef } from "react";
 
 const AsciiBinaryFlow = () => {
   const canvasRef = useRef(null);
-  const mouseRef = useRef({ x: 0.5, y: 0.5 });
+  const wrapperRef = useRef(null);
+  const mouseRef = useRef({ x: 0.5, y: 0.5, active: false });
 
   useEffect(() => {
     const canvas = canvasRef.current;
+    const wrapper = wrapperRef.current;
     if (!canvas) return;
 
     const width = 55;
@@ -15,15 +17,27 @@ const AsciiBinaryFlow = () => {
     let time = 0;
     let animationFrameId;
 
-    // 🐭 Mouse Tracker
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (event) => {
+      const bounds = wrapper?.getBoundingClientRect();
+      if (!bounds) return;
+
       mouseRef.current = {
-        x: e.clientX / window.innerWidth,
-        y: e.clientY / window.innerHeight,
+        x: (event.clientX - bounds.left) / bounds.width,
+        y: (event.clientY - bounds.top) / bounds.height,
+        active:
+          event.clientX >= bounds.left &&
+          event.clientX <= bounds.right &&
+          event.clientY >= bounds.top &&
+          event.clientY <= bounds.bottom,
       };
     };
 
+    const handleMouseLeave = () => {
+      mouseRef.current = { ...mouseRef.current, active: false };
+    };
+
     window.addEventListener("mousemove", handleMouseMove);
+    wrapper?.addEventListener("mouseleave", handleMouseLeave);
 
     function initGrid() {
       grid = new Array(height)
@@ -50,15 +64,28 @@ const AsciiBinaryFlow = () => {
 
       const mouseX = mouseRef.current.x * width;
       const mouseY = mouseRef.current.y * height;
+      const isMouseActive = mouseRef.current.active;
 
       for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
 
-          // 🐭 Mouse influence
           const mdx = x - mouseX;
           const mdy = y - mouseY;
           const mouseDist = Math.sqrt(mdx * mdx + mdy * mdy);
-          const mouseForce = Math.exp(-mouseDist * 0.18);
+          const mouseForce = isMouseActive ? Math.exp(-mouseDist * 0.15) : 0;
+          const ripple = isMouseActive
+            ? Math.sin(mouseDist * 1.05 - time * 0.18) * mouseForce
+            : 0;
+
+          if (isMouseActive && mouseDist < 4.2) {
+            grid[y][x] = mouseDist < 1.35 ? "@" : mouseDist < 2.75 ? "#" : "+";
+            continue;
+          }
+
+          if (isMouseActive && Math.abs(mouseDist - 8.25) < 1.15) {
+            grid[y][x] = ripple > 0 ? "*" : ".";
+            continue;
+          }
 
           if (
             x >= blockX &&
@@ -73,12 +100,12 @@ const AsciiBinaryFlow = () => {
               blockY + blockSize - y
             );
 
-            const erosion = time * 0.006 + mouseForce * 6;
+            const erosion = time * 0.006 + mouseForce * 12 + Math.max(0, ripple) * 8;
 
             if (innerDist > erosion) {
               grid[y][x] = "1";
             } else {
-              grid[y][x] = Math.random() > 0.6 ? "1" : "0";
+              grid[y][x] = mouseForce > 0.3 ? "#" : Math.random() > 0.6 ? "1" : "0";
             }
 
           } else {
@@ -89,14 +116,18 @@ const AsciiBinaryFlow = () => {
             const dist = Math.sqrt(dx * dx + dy * dy);
 
             const wave =
-              Math.sin(dist * 0.2 - t + angle * 1.5 + mouseForce * 3);
+              Math.sin(dist * 0.2 - t + angle * 1.5 + mouseForce * 5);
 
             const flow =
-              Math.sin(x * 0.08 + y * 0.04 + t * 0.4 + mouseForce * 2);
+              Math.sin(x * 0.08 + y * 0.04 + t * 0.4 + mouseForce * 4);
 
-            const value = wave + flow + mouseForce * 1.2;
+            const value = wave + flow + mouseForce * 2.2 + ripple * 2;
 
-            if (value > 0.5) {
+            if (mouseForce > 0.42 && ripple > 0.25) {
+              grid[y][x] = "+";
+            } else if (mouseForce > 0.3 && ripple < -0.15) {
+              grid[y][x] = ".";
+            } else if (value > 0.5) {
               grid[y][x] = "0";
             } else if (value < -0.5) {
               grid[y][x] = "~";
@@ -105,7 +136,6 @@ const AsciiBinaryFlow = () => {
         }
       }
 
-      // cracks (slightly mouse-biased)
       for (let i = 0; i < 2; i++) {
         let cx = blockX + Math.floor(Math.random() * blockSize);
         let cy = blockY + Math.floor(Math.random() * blockSize);
@@ -135,6 +165,7 @@ const AsciiBinaryFlow = () => {
     return () => {
       cancelAnimationFrame(animationFrameId);
       window.removeEventListener("mousemove", handleMouseMove);
+      wrapper?.removeEventListener("mouseleave", handleMouseLeave);
       canvas.textContent = "";
       grid = [];
       time = 0;
@@ -142,7 +173,7 @@ const AsciiBinaryFlow = () => {
   }, []);
 
   return (
-    <div className="ascii-wrapper">
+    <div className="ascii-wrapper" ref={wrapperRef}>
       <div className="ascii-inner">
         <div ref={canvasRef} className="ascii-canvas" />
       </div>

@@ -1,68 +1,88 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const ASCII_WAVE = ["0", "^", "*", "~", "-"]; // Wave characters
-const WAVE_LENGTH = 15; // Kitne characters ka wave
-const CURSOR_COLOR = "#000000"; // Black
+const TRAIL_CHARS = ["+", ".", "'", ".", ","];
+const TRAIL_LENGTH = 12;
+const CURSOR_COLOR = "#1f2a24";
+
+const getInitialPosition = () => {
+  if (typeof window === "undefined") {
+    return { x: 0, y: 0 };
+  }
+
+  return { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+};
 
 const ASCIICursorWave = () => {
-  const [pos, setPos] = useState({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
-  const [wave, setWave] = useState(Array(WAVE_LENGTH).fill({ x: pos.x, y: pos.y }));
+  const [isFinePointer, setIsFinePointer] = useState(false);
+  const [trail, setTrail] = useState(() =>
+    Array.from({ length: TRAIL_LENGTH }, () => getInitialPosition())
+  );
 
-  const posRef = useRef(pos);
+  const targetRef = useRef(getInitialPosition());
 
-  useEffect(() => { posRef.current = pos; }, [pos]);
-
-  // Track mouse
   useEffect(() => {
-    const handleMove = (e) => setPos({ x: e.clientX, y: e.clientY });
+    const media = window.matchMedia("(pointer: fine)");
+    const updatePointerMode = () => setIsFinePointer(media.matches);
+
+    updatePointerMode();
+    media.addEventListener("change", updatePointerMode);
+
+    return () => media.removeEventListener("change", updatePointerMode);
+  }, []);
+
+  useEffect(() => {
+    const handleMove = (event) => {
+      targetRef.current = { x: event.clientX, y: event.clientY };
+    };
+
     window.addEventListener("mousemove", handleMove);
     return () => window.removeEventListener("mousemove", handleMove);
   }, []);
 
-  // Animate wave smoothly
   useEffect(() => {
-    let frame;
+    if (!isFinePointer) return undefined;
+
+    let frameId;
+
     const animate = () => {
-      setWave(prev => {
-        return prev.map((p, i) => {
-          if (i === 0) {
-            // First element follows mouse directly
-            return {
-              x: p.x + (posRef.current.x - p.x) * 0.2,
-              y: p.y + (posRef.current.y - p.y) * 0.2,
-            };
-          } else {
-            // Other elements follow previous one
-            return {
-              x: p.x + (prev[i - 1].x - p.x) * 0.2,
-              y: p.y + (prev[i - 1].y - p.y) * 0.2,
-            };
-          }
-        });
-      });
-      frame = requestAnimationFrame(animate);
+      setTrail((previous) =>
+        previous.map((point, index) => {
+          const leader = index === 0 ? targetRef.current : previous[index - 1];
+          const ease = index === 0 ? 0.42 : 0.28;
+
+          return {
+            x: point.x + (leader.x - point.x) * ease,
+            y: point.y + (leader.y - point.y) * ease,
+          };
+        })
+      );
+
+      frameId = requestAnimationFrame(animate);
     };
+
     animate();
-    return () => cancelAnimationFrame(frame);
-  }, []);
+
+    return () => cancelAnimationFrame(frameId);
+  }, [isFinePointer]);
+
+  if (!isFinePointer) return null;
 
   return (
-    <div style={{ position: "fixed", top: 0, left: 0, pointerEvents: "none", zIndex: 9999 }}>
-      {wave.map((p, i) => (
+    <div className="ascii-cursor" aria-hidden="true">
+      {trail.map((point, index) => (
         <span
-          key={i}
+          key={index}
           style={{
             position: "absolute",
-            left: p.x,
-            top: p.y,
+            left: point.x,
+            top: point.y,
             color: CURSOR_COLOR,
-            fontSize: `${18 + i * 1.2}px`, // Bigger font size for visibility
-            transform: "translate(-50%, -50%)",
-            userSelect: "none",
-            opacity: 1 - i / WAVE_LENGTH, // Tail fades
+            fontSize: index === 0 ? "16px" : `${12 - index * 0.35}px`,
+            opacity: Math.max(0, 0.82 - index * 0.07),
+            transform: `translate(-50%, -50%) rotate(${index * 14}deg)`,
           }}
         >
-          {ASCII_WAVE[i % ASCII_WAVE.length]}
+          {TRAIL_CHARS[index % TRAIL_CHARS.length]}
         </span>
       ))}
     </div>

@@ -12,21 +12,16 @@ const Sidebar = ({ activeSection }) => {
   ];
 
   const handleClick = (id) => {
-    // Desktop (1024px se upar) → scroll allowed
-    if (window.innerWidth > 1024) {
-      const section = document.getElementById(id);
-      if (section) {
-        section.scrollIntoView({ behavior: "smooth" });
-      }
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    // Mobile / Tablet → sirf sidebar close
     setIsOpen(false);
   };
 
   return (
     <>
-      {/* Toggle Button (1024px ↓) */}
       <div className="sidebar-toggle">
         <input id="toggleChecker" type="checkbox" checked={isOpen} readOnly />
         
@@ -43,7 +38,6 @@ const Sidebar = ({ activeSection }) => {
         </label>
       </div>
 
-      {/* Sidebar */}
       <div className={`Sidebar_box ${isOpen ? "open" : ""}`}>
         <div className="Sidebar_list">
           <ul>

@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { Link } from "react-router-dom";
 
-import AsciiBlob from "./Animation_code/AsciiBlob";
+import AsciiEarth from "./Animation_code/AsciiEarth";
 
 const Hero_sec = () => {
   const titleRef = useRef(null);
@@ -50,7 +50,6 @@ const Hero_sec = () => {
       <div className="container">
         <div className="main_hero_sec">
           <div className="hero_sec_title" ref={titleRef}>
-            <p>Software Engineer</p>
             <h2>Arun</h2>
             <h2>Eswara</h2>
             <div className="hero_sec_btn_box">
@@ -60,7 +59,7 @@ const Hero_sec = () => {
           </div>
 
           <div className="hero_sec_img_box" ref={imgRef}>
-            <AsciiBlob />
+            <AsciiEarth />
           </div>
         </div>
       </div>
