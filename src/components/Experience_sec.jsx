@@ -60,21 +60,21 @@ const Experience_sec = () => {
                                 </div>
 
                                 <div className="Experience_sec_card">
-                                    <p>2022 - 2023</p>
+                                    <p>2022 - 2025</p>
                                     <h3>Google</h3>
                                     <p>Software Engineering + Research Engineering</p>
                                     <h4>Built ML/log analysis tooling for YouTube API abuse detection, Android network pipeline work, C/C++ MCU firmware, and BLE support libraries.</h4>
                                 </div>
 
                                 <div className="Experience_sec_card">
-                                    <p>2021 - 2023</p>
+                                    <p>2023</p>
                                     <h3>McKinsey</h3>
                                     <p>Business Analysis</p>
                                     <h4>Modeled Fortune 100/Fortune 500 operating questions and researched sales funnels.</h4>
                                 </div>
 
                                 <div className="Experience_sec_card">
-                                    <p>2021 - 2023</p>
+                                    <p>2021</p>
                                     <h3>NSA</h3>
                                     <p>Cybersecurity</p>
                                     <h4>Worked on zero-trust architecture, distributed firewall automation, and log monitoring.</h4>
