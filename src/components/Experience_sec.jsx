@@ -69,7 +69,7 @@ const Experience_sec = () => {
                                 <div className="Experience_sec_card">
                                     <p>2023</p>
                                     <h3>McKinsey</h3>
-                                    <p>Business Analysis</p>
+                                    <p>Business Analyst Intern</p>
                                     <h4>Modeled Fortune 100/Fortune 500 operating questions and researched sales funnels.</h4>
                                 </div>
 
