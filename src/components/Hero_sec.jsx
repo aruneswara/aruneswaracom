@@ -52,9 +52,12 @@ const Hero_sec = () => {
           <div className="hero_sec_title" ref={titleRef}>
             <h2>Arun</h2>
             <h2>Eswara</h2>
+            <p>OpenAI · San Francisco · UT Austin CSB</p>
             <div className="hero_sec_btn_box">
               <Link to="/blogs"><button>Read Blog →</button></Link>
-              <button>Download Resume ↓</button>
+              <a href="https://www.linkedin.com/in/aruneswara" target="_blank" rel="noreferrer">
+                <button>LinkedIn ↗</button>
+              </a>
             </div>
           </div>
 

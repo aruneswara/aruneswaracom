@@ -68,12 +68,17 @@ const Get_in_touch_sec = () => {
 
                         <div className="get_in_touch_sec_card animate-card">
                             <p>GitHub</p>
-                            <a href="">github.com/aruneswara</a>
+                            <a href="https://github.com/aruneswara" target="_blank" rel="noreferrer">github.com/aruneswara</a>
                         </div>
 
                         <div className="get_in_touch_sec_card animate-card">
                             <p>LinkedIn</p>
-                            <a href="">linkedin.com/in/aruneswara</a>
+                            <a href="https://www.linkedin.com/in/aruneswara" target="_blank" rel="noreferrer">linkedin.com/in/aruneswara</a>
+                        </div>
+
+                        <div className="get_in_touch_sec_card animate-card">
+                            <p>Website</p>
+                            <a href="https://www.aruneswara.com" target="_blank" rel="noreferrer">aruneswara.com</a>
                         </div>
 
                     </div>

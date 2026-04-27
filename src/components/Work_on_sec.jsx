@@ -53,27 +53,27 @@ const Work_on_sec = () => {
                             <div className="work_on_list_box">
                                 <div className="work_on_card">
                                     <p>01</p>
-                                    <h3>Backend Systems</h3>
-                                    <h4>Scalable APIs and services that handle production traffic</h4>
+                                    <h3>AI Product Systems</h3>
+                                    <h4>Model-facing product and engineering systems shaped by work at OpenAI</h4>
                                 </div>
 
                                 <div className="work_on_card">
                                     <p>02</p>
-                                    <h3>Infrastructure</h3>
-                                    <h4>Systems that are maintainable, observable, and resilient</h4>
+                                    <h3>Applied ML & Tooling</h3>
+                                    <h4>YouTube abuse detection, network analysis tools, and workflow automation</h4>
                                 </div>
 
 
                                 <div className="work_on_card">
                                     <p>03</p>
-                                    <h3>Engineering Quality</h3>
-                                    <h4>Clean code, comprehensive tests, clear documentation</h4>
+                                    <h3>Research Engineering</h3>
+                                    <h4>C/C++ MCU firmware, BLE/Android libraries, and sensor research support</h4>
                                 </div>
 
                                 <div className="work_on_card">
                                     <p>04</p>
-                                    <h3>API Design</h3>
-                                    <h4>RESTful interfaces that are intuitive and well-documented</h4>
+                                    <h3>Projects & Writing</h3>
+                                    <h4>Ribbon, Ortho, BioProtect, LyricLearner, and essays on aruneswara.com</h4>
                                 </div>
 
                             </div>

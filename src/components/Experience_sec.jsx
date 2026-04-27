@@ -53,17 +53,31 @@ const Experience_sec = () => {
                             <h2>Experience</h2>
                             <div className="Experience_sec_box">
                                 <div className="Experience_sec_card">
-                                    <p>2022 - Present</p>
-                                    <h3>Senior Backend Engineer</h3>
-                                    <p>TechCorp</p>
-                                    <h4>Leading backend development for distributed systems serving millions of users.</h4>
+                                    <p>Present</p>
+                                    <h3>OpenAI</h3>
+                                    <p>San Francisco, California</p>
+                                    <h4>Building at OpenAI from San Francisco.</h4>
                                 </div>
 
                                 <div className="Experience_sec_card">
-                                    <p>2020 - 2022</p>
-                                    <h3>Software Engineer</h3>
-                                    <p>StartupXYZ</p>
-                                    <h4>Built scalable APIs and microservices architecture from the ground up.</h4>
+                                    <p>2022 - 2023</p>
+                                    <h3>Google</h3>
+                                    <p>Software Engineering + Research Engineering</p>
+                                    <h4>Built ML/log analysis tooling for YouTube API abuse detection, Android network pipeline work, C/C++ MCU firmware, and BLE support libraries.</h4>
+                                </div>
+
+                                <div className="Experience_sec_card">
+                                    <p>2021 - 2023</p>
+                                    <h3>McKinsey + NSA</h3>
+                                    <p>Business Analysis + Cybersecurity</p>
+                                    <h4>Modeled Fortune 100/Fortune 500 operating questions, researched sales funnels, and worked on zero-trust architecture, distributed firewall automation, and log monitoring.</h4>
+                                </div>
+
+                                <div className="Experience_sec_card">
+                                    <p>2020 - 2024</p>
+                                    <h3>University of Texas at Austin</h3>
+                                    <p>Computer Science Honors + Business Honors</p>
+                                    <h4>BS in Computer Science Honors and BBA in Business Honors via Texas CSB, with a 3.93 GPA and activities across ACM, TUIT, HBA, and CSBA.</h4>
                                 </div>
                             </div>
                         </div>

@@ -311,7 +311,8 @@ button {
     font-weight: 400;
     line-height: 20px; /* 142.857% */
     color: var(--ink-muted);
-    padding-bottom: 15px;
+    padding-top: 18px;
+    padding-bottom: 0;
 }
 
 .hero_sec_title h2 {
@@ -330,6 +331,10 @@ button {
     justify-content: flex-start;
     gap: 15px;
     padding-top: 25px;
+}
+
+.hero_sec_btn_box a {
+    text-decoration: none;
 }
 
 .hero_sec_btn_box button {
@@ -452,8 +457,8 @@ button {
 .Experience_sec_card {
     width: 100%;
     border-left: 1px solid var(--line);
-    padding-left: 25px;
-    margin-top: 50px;
+    padding-left: 22px;
+    margin-top: 26px;
 }
 
 .Experience_sec_card p {
@@ -477,10 +482,10 @@ button {
 
 .Experience_sec_card h4 {
     font-family: "Poppins";
-    font-size: 16px;
+    font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 27.2px; /* 170% */
+    line-height: 22px;
     color: var(--ink-muted);
     padding-top: 10px;
 }
@@ -495,10 +500,12 @@ button {
     align-items: center;
     justify-content: space-between;
     padding-top: 50px;
+    gap: 28px;
+    flex-wrap: wrap;
 }
 
 .get_in_touch_sec_card {
-    width: auto;
+    min-width: 180px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -1551,10 +1558,10 @@ section.Blog_Sec {
 }
 
 .main_Experience_sec {
-    max-height: 100vh;
+    max-height: none;
     flex-direction: column;
     gap: 25px;
-    padding: 40px 0px;
+    padding: 96px 0px 48px;
 }
 
 .artwork-wrapper {
@@ -1572,6 +1579,20 @@ section.Blog_Sec {
 
 .Experience_sec_img_box {
     width: 100%;
+}
+
+section.Experience_sec {
+    height: auto;
+}
+
+section.Get_in_touch_sec {
+    height: auto;
+    min-height: 100vh;
+    padding: 96px 0px 60px;
+}
+
+.Experience_sec_img_box {
+    display: none;
 }
 
 
