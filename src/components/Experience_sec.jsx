@@ -53,7 +53,7 @@ const Experience_sec = () => {
                             <h2>Experience</h2>
                             <div className="Experience_sec_box">
                                 <div className="Experience_sec_card">
-                                    <p>Present</p>
+                                    <p>2025 - Present</p>
                                     <h3>OpenAI</h3>
                                     <p>San Francisco, California</p>
                                     <h4>Building at OpenAI from San Francisco.</h4>
