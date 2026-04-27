@@ -62,7 +62,7 @@ const Experience_sec = () => {
                                 <div className="Experience_sec_card">
                                     <p>2022 - 2025</p>
                                     <h3>Google</h3>
-                                    <p>Software Engineering + Research Engineering</p>
+                                    <p>Software + Research Engineer (Intern and FT)</p>
                                     <h4>Built ML/log analysis tooling for YouTube API abuse detection, Android network pipeline work, C/C++ MCU firmware, and BLE support libraries.</h4>
                                 </div>
 
