@@ -53,24 +53,31 @@ const Experience_sec = () => {
                             <h2>Experience</h2>
                             <div className="Experience_sec_box">
                                 <div className="Experience_sec_card">
-                                    <p>Present</p>
+                                    <p>2025 - Present</p>
                                     <h3>OpenAI</h3>
                                     <p>San Francisco, California</p>
                                     <h4>Building at OpenAI from San Francisco.</h4>
                                 </div>
 
                                 <div className="Experience_sec_card">
-                                    <p>2022 - 2023</p>
+                                    <p>2022 - 2025</p>
                                     <h3>Google</h3>
                                     <p>Software Engineering + Research Engineering</p>
                                     <h4>Built ML/log analysis tooling for YouTube API abuse detection, Android network pipeline work, C/C++ MCU firmware, and BLE support libraries.</h4>
                                 </div>
 
                                 <div className="Experience_sec_card">
-                                    <p>2021 - 2023</p>
-                                    <h3>McKinsey + NSA</h3>
-                                    <p>Business Analysis + Cybersecurity</p>
-                                    <h4>Modeled Fortune 100/Fortune 500 operating questions, researched sales funnels, and worked on zero-trust architecture, distributed firewall automation, and log monitoring.</h4>
+                                    <p>2023</p>
+                                    <h3>McKinsey</h3>
+                                    <p>Business Analysis</p>
+                                    <h4>Modeled Fortune 100/Fortune 500 operating questions and researched sales funnels.</h4>
+                                </div>
+
+                                <div className="Experience_sec_card">
+                                    <p>2021</p>
+                                    <h3>NSA</h3>
+                                    <p>Cybersecurity</p>
+                                    <h4>Worked on zero-trust architecture, distributed firewall automation, and log monitoring.</h4>
                                 </div>
 
                                 <div className="Experience_sec_card">
