@@ -165,7 +165,7 @@ const Blog_inner_sec = () => {
 
             {/* Author Info */}
             <div className="Written_by_box">
-              <h3>Written by {blog.author?.name || "Arun Eswara"}</h3>
+              <h3>Written by {blog.author?.name || "Varun Eswara"}</h3>
               <h3>{blog.author?.title || "Software Engineer"}</h3>
               <p>Thanks for reading.</p>
             </div>
