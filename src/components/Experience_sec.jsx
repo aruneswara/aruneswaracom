@@ -76,7 +76,7 @@ const Experience_sec = () => {
                                 <div className="Experience_sec_card">
                                     <p>2021</p>
                                     <h3>NSA</h3>
-                                    <p>Cybersecurity</p>
+                                    <p>Cybersecurity Intern</p>
                                     <h4>Worked on zero-trust architecture, distributed firewall automation, and log monitoring.</h4>
                                 </div>
 
