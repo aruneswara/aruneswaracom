@@ -50,7 +50,7 @@ const Hero_sec = () => {
       <div className="container">
         <div className="main_hero_sec">
           <div className="hero_sec_title" ref={titleRef}>
-            <h2>Arun</h2>
+            <h2>Varun</h2>
             <h2>Eswara</h2>
             <p>OpenAI · San Francisco · UT Austin</p>
             <div className="hero_sec_btn_box">
