@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import AsciiBinaryFlow from "./Animation_code/AsciiBinaryFlow";
 import { gsap } from "gsap";
+import profile from "../data/profile";
+
 const Work_on_sec = () => {
 
     const titleRef = useRef(null);
@@ -51,31 +53,13 @@ const Work_on_sec = () => {
                         <div className="work_on_title" ref={titleRef}>
                             <h2>What I Work On</h2>
                             <div className="work_on_list_box">
-                                <div className="work_on_card">
-                                    <p>01</p>
-                                    <h3>AI Product Systems</h3>
-                                    <h4>Model-facing product and engineering systems shaped by work at OpenAI</h4>
-                                </div>
-
-                                <div className="work_on_card">
-                                    <p>02</p>
-                                    <h3>Applied ML & Tooling</h3>
-                                    <h4>YouTube abuse detection, network analysis tools, and workflow automation</h4>
-                                </div>
-
-
-                                <div className="work_on_card">
-                                    <p>03</p>
-                                    <h3>Research Engineering</h3>
-                                    <h4>C/C++ MCU firmware, BLE/Android libraries, and sensor research support</h4>
-                                </div>
-
-                                <div className="work_on_card">
-                                    <p>04</p>
-                                    <h3>Projects & Writing</h3>
-                                    <h4>Ribbon, Ortho, BioProtect, LyricLearner, and essays on aruneswara.com</h4>
-                                </div>
-
+                                {profile.focusAreas.map((item, index) => (
+                                    <div className="work_on_card" key={item.title}>
+                                        <p>{String(index + 1).padStart(2, "0")}</p>
+                                        <h3>{item.title}</h3>
+                                        <h4>{item.description}</h4>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                         <div className="work_on_img" ref={imgRef}>

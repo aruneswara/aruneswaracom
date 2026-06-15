@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import profile from "../data/profile";
 
 const Get_in_touch_sec = () => {
     const sectionRef = useRef(null);
@@ -63,22 +64,32 @@ const Get_in_touch_sec = () => {
 
                         <div className="get_in_touch_sec_card animate-card">
                             <p>Email</p>
-                            <a href="mailto:aruneswara@icloud.com">aruneswara@icloud.com</a>
+                            <a href={`mailto:${profile.contact.emails[0]}`}>{profile.contact.emails[0]}</a>
+                        </div>
+
+                        <div className="get_in_touch_sec_card animate-card">
+                            <p>UT Austin Email</p>
+                            <a href={`mailto:${profile.contact.emails[1]}`}>{profile.contact.emails[1]}</a>
+                        </div>
+
+                        <div className="get_in_touch_sec_card animate-card">
+                            <p>Phone</p>
+                            <a href={`tel:${profile.contact.phone.replaceAll("-", "")}`}>{profile.contact.phone}</a>
                         </div>
 
                         <div className="get_in_touch_sec_card animate-card">
                             <p>GitHub</p>
-                            <a href="https://github.com/aruneswara" target="_blank" rel="noreferrer">github.com/aruneswara</a>
+                            <a href={profile.contact.github} target="_blank" rel="noreferrer">github.com/aruneswara</a>
                         </div>
 
                         <div className="get_in_touch_sec_card animate-card">
                             <p>LinkedIn</p>
-                            <a href="https://www.linkedin.com/in/aruneswara" target="_blank" rel="noreferrer">linkedin.com/in/aruneswara</a>
+                            <a href={profile.contact.linkedin} target="_blank" rel="noreferrer">linkedin.com/in/aruneswara</a>
                         </div>
 
                         <div className="get_in_touch_sec_card animate-card">
                             <p>Website</p>
-                            <a href="https://www.aruneswara.com" target="_blank" rel="noreferrer">aruneswara.com</a>
+                            <a href={profile.contact.website} target="_blank" rel="noreferrer">aruneswara.com</a>
                         </div>
 
                     </div>

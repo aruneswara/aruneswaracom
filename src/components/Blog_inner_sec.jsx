@@ -1,101 +1,49 @@
 import { Link, useParams } from "react-router-dom";
 import Get_in_touch_sec from "./Get_in_touch_sec";
-import { getBlogById } from "../data/blogPosts";
+import blogPosts, { getBlogById } from "../data/blogPosts";
+import {
+  formatBlogDate,
+  getRecentBlogPosts,
+  getBlogReadTime,
+  getBlogRouteId,
+  getLinkedTextSegments,
+  shouldRenderHeroImage,
+} from "../data/blogUtils";
 
-const Blog_inner_sec = () => {
-  const { id = "" } = useParams();
-  const blog = getBlogById(decodeURIComponent(id));
-
-  const formatDate = (dateString) => {
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    return new Date(dateString).toLocaleDateString("en-US", options);
-  };
-
-  const renderTextWithLinks = (text, links = []) => {
-    const usableLinks = links.filter((link) => link.text && link.url);
-
-    if (usableLinks.length === 0) {
-      return text;
-    }
-
-    const parts = [];
-    let cursor = 0;
-
-    usableLinks.forEach((link, index) => {
-      const start = text.indexOf(link.text, cursor);
-
-      if (start === -1) {
-        return;
-      }
-
-      if (start > cursor) {
-        parts.push(text.slice(cursor, start));
-      }
-
-      parts.push(
-        <a href={link.url} target="_blank" rel="noreferrer" key={`${link.url}-${index}`}>
-          {link.text}
+const renderLinkedText = (text, links) =>
+  getLinkedTextSegments(text, links).map((segment, index) => {
+    if (segment.type === "link") {
+      return (
+        <a key={`${segment.url}-${index}`} href={segment.url} target="_blank" rel="noreferrer">
+          {segment.text}
         </a>
       );
-      cursor = start + link.text.length;
-    });
-
-    if (cursor < text.length) {
-      parts.push(text.slice(cursor));
     }
 
-    return parts.length > 0 ? parts : text;
-  };
+    return segment.text;
+  });
 
-  const renderContentBlock = (block, index) => {
-    if (block.type === "image") {
-      return (
-        <figure className="Blog_inner_image" key={`${block.src}-${index}`}>
-          <img src={block.src} alt={block.alt || ""} loading="lazy" />
-        </figure>
-      );
-    }
-
-    if (block.type === "heading") {
-      return (
-        <div className="Blog_inner__title" key={`${block.text}-${index}`}>
-          <h3>{renderTextWithLinks(block.text, block.links)}</h3>
-        </div>
-      );
-    }
-
-    if (block.type === "quote") {
-      return (
-        <blockquote className="Blog_inner_quote" key={`${block.text}-${index}`}>
-          {renderTextWithLinks(block.text, block.links)}
-        </blockquote>
-      );
-    }
-
-    if (block.type === "code") {
-      return (
-        <pre className="Blog_inner_code" key={`${block.text}-${index}`}>
-          <code>{block.text}</code>
-        </pre>
-      );
-    }
-
-    if (block.type === "embed") {
-      return (
-        <div className="Blog_inner_link" key={`${block.src}-${index}`}>
-          <a href={block.src} target="_blank" rel="noreferrer">
-            View embedded media
-          </a>
-        </div>
-      );
-    }
-
+const renderContentBlock = (block, index) => {
+  if (block.type === "image") {
     return (
-      <div className="Blog_inner_box" key={`${block.text}-${index}`}>
-        <p>{renderTextWithLinks(block.text, block.links)}</p>
-      </div>
+      <figure className="Blog_inner_image" key={`${block.src}-${index}`}>
+        <img src={block.src} alt={block.alt || ""} loading="lazy" />
+        {block.alt && <figcaption>{block.alt}</figcaption>}
+      </figure>
     );
-  };
+  }
+
+  return (
+    <div className="Blog_inner_box blog_post_content" key={`${block.text}-${index}`}>
+      <p>{renderLinkedText(block.text, block.links)}</p>
+    </div>
+  );
+};
+
+const Blog_inner_sec = () => {
+  const { id } = useParams();
+  const blog = getBlogById(id);
+  const recentPosts = getRecentBlogPosts(blogPosts, id);
 
   if (!blog) {
     return (
@@ -103,7 +51,7 @@ const Blog_inner_sec = () => {
         <div className="container">
           <div className="main_blog_Sec">
             <div className="error-state">
-              <p>Blog not found</p>
+              <p>Blog not found.</p>
               <Link to="/blogs">← Back to all posts</Link>
             </div>
           </div>
@@ -111,8 +59,6 @@ const Blog_inner_sec = () => {
       </section>
     );
   }
-
-  const repeatsHeroImage = blog.image && blog.content?.some((block) => block.type === "image" && block.src === blog.image);
 
   return (
     <>
@@ -126,18 +72,35 @@ const Blog_inner_sec = () => {
               <div className="blog_Sec_top_heading">
                 <h2>{blog.title}</h2>
                 <p>{blog.description}</p>
-                <p>{formatDate(blog.date)} · {blog.readTime || "5 min read"}</p>
+                <p>{formatBlogDate(blog.date)} · {getBlogReadTime(blog)}</p>
+                {blog.sourceUrl && (
+                  <a className="source_post_link" href={blog.sourceUrl} target="_blank" rel="noreferrer">
+                    Original post ↗
+                  </a>
+                )}
               </div>
             </div>
 
-            {blog.image && !repeatsHeroImage && (
+            {shouldRenderHeroImage(blog) && (
               <figure className="Blog_inner_image Blog_inner_hero_image">
-                <img src={blog.image} alt="" loading="eager" />
+                <img src={blog.image} alt={blog.title} loading="eager" />
               </figure>
             )}
 
-            <div className="Blog_inner_sec_box blog_post_content">
-              {blog.content?.map((block, index) => renderContentBlock(block, index))}
+            <div className="Blog_inner_sec_box">
+              {blog.content.map(renderContentBlock)}
+            </div>
+
+            <div className="recent_posts_box">
+              <h3>Recent Posts</h3>
+              <div className="recent_posts_grid">
+                {recentPosts.map((post) => (
+                  <Link to={`/blog-inner/${encodeURIComponent(getBlogRouteId(post))}`} key={getBlogRouteId(post)}>
+                    <span>{formatBlogDate(post.date)}</span>
+                    <strong>{post.title}</strong>
+                  </Link>
+                ))}
+              </div>
             </div>
           </div>
         </div>

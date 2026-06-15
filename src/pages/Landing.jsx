@@ -3,10 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import Hero_sec from "../components/Hero_sec";
 import Work_on_sec from "../components/Work_on_sec";
 import Experience_sec from "../components/Experience_sec";
+import Credentials_sec from "../components/Credentials_sec";
+import Projects_sec from "../components/Projects_sec";
 import Get_in_touch_sec from "../components/Get_in_touch_sec";
 import Sidebar from "../components/Sidebar";
 
-const sections = ["home", "work", "experience", "contact"];
+const sections = ["home", "work", "experience", "education", "projects", "contact"];
 
 const Landing = () => {
   const [activeSection, setActiveSection] = useState(0);
@@ -56,6 +58,14 @@ const Landing = () => {
 
         <div className="section">
           <Experience_sec />
+        </div>
+
+        <div className="section resume-section">
+          <Credentials_sec />
+        </div>
+
+        <div className="section resume-section">
+          <Projects_sec />
         </div>
 
         <div className="section">

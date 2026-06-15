@@ -1,3 +1,5 @@
+import { findBlogById, getBlogCategories } from "./blogUtils.js";
+
 const blogPosts = [
   {
     "_id": "you-re-the-problem",
@@ -1105,8 +1107,7 @@ const blogPosts = [
   }
 ];
 
-export const blogCategories = [
-  "All",
+const preferredBlogCategoryOrder = [
   "Writing",
   "Projects",
   "Engineering",
@@ -1116,6 +1117,8 @@ export const blogCategories = [
   "Letters"
 ];
 
-export const getBlogById = (id) => blogPosts.find((post) => post._id === id || post.slug === id);
+export const blogCategories = getBlogCategories(blogPosts, preferredBlogCategoryOrder);
+
+export const getBlogById = (id) => findBlogById(blogPosts, id);
 
 export default blogPosts;

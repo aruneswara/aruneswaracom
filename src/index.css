@@ -151,6 +151,7 @@
     margin-left: var(--sidebar-width);
     height: 100vh;
     overflow-y: auto;
+    overflow-x: hidden;
     scroll-behavior: smooth;
     scroll-snap-type: y proximity;
 }
@@ -190,6 +191,16 @@ section.Experience_sec {
 section.Get_in_touch_sec {
     width: 100%;
     height: 100%;
+}
+
+.section.resume-section {
+    align-items: stretch;
+}
+
+section.Credentials_sec,
+section.Projects_sec {
+    width: 100%;
+    padding: 96px 0px;
 }
 
 
@@ -258,8 +269,8 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    gap: 28px;
-    padding-bottom: 95px;
+    gap: 22px;
+    padding-bottom: 72px;
 }
 
 .Sidebar_list button {
@@ -331,6 +342,7 @@ button {
     justify-content: flex-start;
     gap: 15px;
     padding-top: 25px;
+    flex-wrap: wrap;
 }
 
 .hero_sec_btn_box a {
@@ -428,17 +440,16 @@ button {
 
 .main_Experience_sec {
     width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: block;
+    padding: 90px 0px;
 }
 
 .Experience_sec_title {
-    width: 48%;
+    width: 100%;
 }
 
 .Experience_sec_img_box {
-    width: 48%;
+    display: none;
 }
 
 .Experience_sec_title h2 {
@@ -452,13 +463,17 @@ button {
 
 .Experience_sec_box {
     width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px 34px;
+    padding-top: 34px;
 }
 
 .Experience_sec_card {
     width: 100%;
     border-left: 1px solid var(--line);
     padding-left: 22px;
-    margin-top: 26px;
+    margin-top: 0;
 }
 
 .Experience_sec_card p {
@@ -488,6 +503,149 @@ button {
     line-height: 22px;
     color: var(--ink-muted);
     padding-top: 10px;
+}
+
+.Experience_sec_card ul,
+.credential_card ul {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 0;
+    padding: 12px 0px 0px 18px;
+}
+
+.Experience_sec_card li,
+.credential_card li {
+    font-family: "Poppins";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 21px;
+    color: var(--ink-muted);
+}
+
+section.Credentials_sec,
+section.Projects_sec {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 90px 0px;
+}
+
+.resume_section_header {
+    width: 100%;
+}
+
+.resume_section_header--secondary {
+    padding-top: 58px;
+}
+
+.resume_section_header p {
+    font-family: "JetBrainsMono";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    color: var(--terracotta);
+    text-transform: uppercase;
+}
+
+.resume_section_header h2 {
+    color: var(--ink);
+    font-family: "CrimsonText";
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 36px;
+    padding-top: 10px;
+}
+
+.credentials_grid,
+.projects_grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 34px;
+    padding-top: 38px;
+}
+
+.award_grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    padding-top: 28px;
+}
+
+.credential_card,
+.award_item,
+.project_item {
+    border-left: 1px solid var(--line);
+    padding-left: 22px;
+}
+
+.credential_card > p {
+    font-family: "JetBrainsMono";
+    font-size: 12px;
+    line-height: 16px;
+    color: var(--terracotta);
+}
+
+.credential_card h3,
+.award_item h3,
+.project_item h3 {
+    color: var(--ink);
+    font-family: "CrimsonText";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 28px;
+    padding: 10px 0px;
+}
+
+.credential_card h4,
+.award_item p,
+.project_item p {
+    color: var(--ink-muted);
+    font-family: "Poppins";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 23px;
+}
+
+.project_item {
+    min-height: 205px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.project_item a,
+.credential_link a,
+.source_post_link {
+    color: var(--accent);
+    font-family: "JetBrainsMono";
+    font-size: 13px;
+    line-height: 18px;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.project_item a:hover,
+.project_item a:focus-visible,
+.credential_link a:hover,
+.credential_link a:focus-visible,
+.source_post_link:hover,
+.source_post_link:focus-visible {
+    border-color: var(--accent);
+}
+
+.credential_link {
+    padding-top: 34px;
 }
 
 .main_get_in_touch_sec {
@@ -764,6 +922,13 @@ section.Blog_Sec {
     gap: 10px 0px;
     border-bottom: 1.339px solid var(--line);
     padding: 40px 0px;
+    color: inherit;
+    text-decoration: none;
+}
+
+.blog_Sec_card:focus-visible {
+    outline: 2px solid rgba(47, 93, 80, 0.45);
+    outline-offset: 4px;
 }
 
 .blog_Sec_date {
@@ -812,7 +977,7 @@ section.Blog_Sec {
         width: 80%;
 }
 
-.blog_Sec_card_title span a {
+.blog_Sec_card_arrow {
     border-radius: 500px;
     background: rgba(255, 250, 241, 0.72);
     border: 1px solid var(--line);
@@ -824,8 +989,8 @@ section.Blog_Sec {
     transition: background 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
 }
 
-.blog_Sec_card_title span a:hover,
-.blog_Sec_card_title span a:focus-visible {
+.blog_Sec_card:hover .blog_Sec_card_arrow,
+.blog_Sec_card:focus-visible .blog_Sec_card_arrow {
     background: var(--accent-soft);
     border-color: rgba(47, 93, 80, 0.32);
     transform: translateX(2px);
@@ -921,6 +1086,14 @@ line-height: 48px; /* 180% */
     border-radius: 6px;
 }
 
+.Blog_inner_image figcaption {
+    color: var(--ink-muted);
+    font-family: "JetBrainsMono";
+    font-size: 12px;
+    line-height: 18px;
+    padding-top: 10px;
+}
+
 .Blog_inner_quote {
     color: var(--ink);
     font-family: "Poppins";
@@ -944,7 +1117,6 @@ line-height: 48px; /* 180% */
     font-size: 14px;
     line-height: 24px;
 }
-
 
 section.Blog_add_form {
     width: 100%;
@@ -1132,6 +1304,53 @@ width: 100%;
     font-style: normal;
     font-weight: 400;
     line-height: 35px; /* 218.75% */
+}
+
+.recent_posts_box {
+    width: 100%;
+    padding-top: 70px;
+}
+
+.recent_posts_box h3 {
+    color: var(--ink);
+    font-family: "CrimsonText";
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 34px;
+}
+
+.recent_posts_grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    padding-top: 24px;
+}
+
+.recent_posts_grid a {
+    border-left: 1px solid var(--line);
+    padding-left: 18px;
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.recent_posts_grid span {
+    display: block;
+    color: var(--terracotta);
+    font-family: "JetBrainsMono";
+    font-size: 12px;
+    line-height: 16px;
+    padding-bottom: 8px;
+}
+
+.recent_posts_grid strong {
+    display: block;
+    color: var(--ink);
+    font-family: "Poppins";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 22px;
 }
 section#contact {
     padding-bottom: 80px;
@@ -1438,7 +1657,17 @@ display: none;
 
 .Experience_sec_card {
     padding-left: 20px;
-    margin-top: 40px;
+    margin-top: 0;
+}
+
+.Experience_sec_box,
+.credentials_grid,
+.projects_grid {
+    gap: 24px;
+}
+
+.award_grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .Experience_sec_title h2 {
@@ -1506,12 +1735,12 @@ section.Blog_Sec {
     line-height: normal;
 }
 
-.blog_Sec_card_title span a {
+.blog_Sec_card_arrow {
     width: 40px;
     height: 40px;
 }
 
-.blog_Sec_card_title span a svg {
+.blog_Sec_card_arrow svg {
     width: 20px;
 }
 
@@ -1625,7 +1854,7 @@ section.Blog_Sec {
 }
 
 .Experience_sec_card {
-    margin-top: 25px;
+    margin-top: 0;
 }
 
 .Experience_sec_title {
@@ -1646,8 +1875,40 @@ section.Get_in_touch_sec {
     padding: 96px 0px 60px;
 }
 
+.credentials_grid,
+.award_grid,
+.projects_grid {
+    gap: 18px;
+}
+
+.resume_section_header h2 {
+    font-size: 24px;
+}
+
 .Experience_sec_img_box {
     display: none;
+}
+
+.Experience_sec_box,
+.credentials_grid,
+.projects_grid,
+.award_grid,
+.recent_posts_grid {
+    grid-template-columns: 1fr;
+}
+
+section.Credentials_sec,
+section.Projects_sec {
+    min-height: auto;
+    padding: 96px 0px 48px;
+}
+
+.resume_section_header--secondary {
+    padding-top: 42px;
+}
+
+.project_item {
+    min-height: auto;
 }
 
 
@@ -1844,6 +2105,35 @@ pre.ascii-canvas {
 
 .get_in_touch_heading h2 {
     font-size: 20px;
+}
+
+section.Credentials_sec,
+section.Projects_sec {
+    padding: 72px 0px 48px;
+}
+
+.credential_card,
+.award_item,
+.project_item {
+    padding: 18px;
+}
+
+.credential_card h3,
+.award_item h3,
+.project_item h3 {
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.credential_card li,
+.award_item p,
+.project_item p {
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.resume_section_header--secondary {
+    padding-top: 42px;
 }
 
 .get_in_touch_sec_box {

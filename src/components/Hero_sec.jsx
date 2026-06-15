@@ -3,6 +3,7 @@ import { gsap } from "gsap";
 import { Link } from "react-router-dom";
 
 import AsciiEarth from "./Animation_code/AsciiEarth";
+import profile from "../data/profile";
 
 const Hero_sec = () => {
   const titleRef = useRef(null);
@@ -52,9 +53,13 @@ const Hero_sec = () => {
           <div className="hero_sec_title" ref={titleRef}>
             <h2>Arun</h2>
             <h2>Eswara</h2>
-            <p>OpenAI · San Francisco · UT Austin</p>
+            <p>{profile.tagline}</p>
+            <p>{profile.location} · UT Austin CSB</p>
             <div className="hero_sec_btn_box">
               <Link to="/blogs"><button>Read Blog →</button></Link>
+              <a href={`mailto:${profile.contact.emails[0]}`}>
+                <button>Email →</button>
+              </a>
               <a href="https://www.linkedin.com/in/aruneswara" target="_blank" rel="noreferrer">
                 <button>LinkedIn ↗</button>
               </a>
