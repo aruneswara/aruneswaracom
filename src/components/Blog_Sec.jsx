@@ -1,42 +1,17 @@
-import { useCallback, useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Arrowsvg } from "./Svg_components/Svg";
-import blogService from "../Redux/blogService";
+import blogPosts, { blogCategories } from "../data/blogPosts";
 
 const Blog_Sec = () => {
   const [activeTab, setActiveTab] = useState("All");
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  // Tab names
-  const tabs = ["All", "Backend", "API Design", "Systems", "Engineering"];
-
-  const fetchBlogs = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const response = await blogService.getAllBlogs();
-      setBlogs(response.data || []);
-    } catch (err) {
-      console.error("Error fetching blogs:", err);
-      setError("Failed to load blogs. Please try again later.");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  // Fetch blogs from API
-  useEffect(() => {
-    fetchBlogs();
-  }, [fetchBlogs]);
 
   // Filter blogs based on active tab
   const getFilteredBlogs = () => {
     if (activeTab === "All") {
-      return blogs;
+      return blogPosts;
     }
-    return blogs.filter(blog => blog.category && blog.category.includes(activeTab));
+    return blogPosts.filter(blog => blog.category && blog.category.includes(activeTab));
   };
 
   // Format date
@@ -66,7 +41,7 @@ const Blog_Sec = () => {
           <div className="blog_Sec_tab">
             {/* Tab headings */}
             <div className="blog_Sec_tab_list">
-              {tabs.map((tab) => (
+              {blogCategories.map((tab) => (
                 <h3
                   key={tab}
                   className={activeTab === tab ? "active" : ""}
@@ -80,23 +55,8 @@ const Blog_Sec = () => {
 
             {/* Tab content */}
             <div className="blog_Sec_tab_body">
-              {/* Loading State */}
-              {loading && (
-                <div className="loading-state">
-                  <p>Loading blogs...</p>
-                </div>
-              )}
-
-              {/* Error State */}
-              {error && (
-                <div className="error-state">
-                  <p>{error}</p>
-                  <button onClick={fetchBlogs}>Retry</button>
-                </div>
-              )}
-
               {/* Empty State */}
-              {!loading && !error && filteredBlogs.length === 0 && (
+              {filteredBlogs.length === 0 && (
                 <div className="empty-state">
                   <p>No blogs found in this category.</p>
                   {activeTab !== "All" && (
@@ -106,7 +66,7 @@ const Blog_Sec = () => {
               )}
 
               {/* Blog List */}
-              {!loading && !error && filteredBlogs.length > 0 && (
+              {filteredBlogs.length > 0 && (
                 <div className="blog_Sec_box">
                   {filteredBlogs.map((post) => (
                     <div className="blog_Sec_card" key={post._id}>

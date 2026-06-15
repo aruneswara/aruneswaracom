@@ -729,6 +729,7 @@ section.Blog_Sec {
     align-items: center;
     justify-content: flex-start;
     gap: 50px;
+    flex-wrap: wrap;
 }
 
 .blog_Sec_tab_list h3 {
@@ -778,6 +779,7 @@ section.Blog_Sec {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 20px;
 }
 
 .blog_Sec_date p {
@@ -796,6 +798,7 @@ section.Blog_Sec {
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    max-width: calc(100% - 70px);
 }
 
 .blog_Sec_card_title p {
@@ -879,7 +882,7 @@ line-height: 48px; /* 180% */
      font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    line-height: normal; /* 300% */
+    line-height: 32px;
 }
 
 .Blog_inner_link {
@@ -888,6 +891,58 @@ line-height: 48px; /* 180% */
     background-color: rgba(255, 250, 241, 0.74);
     border: 1px solid var(--line);
     border-radius: 6px;
+}
+
+.blog_post_content a,
+.Blog_inner_link a,
+.Written_by_box a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+}
+
+.Blog_inner_image {
+    width: 100%;
+    margin: 8px 0px 12px 0px;
+}
+
+.Blog_inner_hero_image {
+    margin-top: 50px;
+}
+
+.Blog_inner_image img {
+    display: block;
+    width: 100%;
+    max-height: 720px;
+    object-fit: contain;
+    background: rgba(255, 250, 241, 0.72);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+}
+
+.Blog_inner_quote {
+    color: var(--ink);
+    font-family: "Poppins";
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 32px;
+    border-left: 3px solid var(--accent);
+    padding-left: 18px;
+}
+
+.Blog_inner_code {
+    width: 100%;
+    overflow-x: auto;
+    padding: 18px;
+    background-color: rgba(255, 250, 241, 0.74);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    color: var(--ink);
+    font-family: "JetBrainsMono";
+    font-size: 14px;
+    line-height: 24px;
 }
 
 
