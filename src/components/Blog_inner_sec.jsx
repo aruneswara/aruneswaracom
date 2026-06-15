@@ -139,18 +139,6 @@ const Blog_inner_sec = () => {
             <div className="Blog_inner_sec_box blog_post_content">
               {blog.content?.map((block, index) => renderContentBlock(block, index))}
             </div>
-
-            <div className="Written_by_box">
-              <h3>Written by {blog.author?.name || "Arun Eswara"}</h3>
-              <h3>{blog.author?.title || "Software Engineer"}</h3>
-              {blog.sourceUrl && (
-                <p>
-                  <a href={blog.sourceUrl} target="_blank" rel="noreferrer">
-                    Original post
-                  </a>
-                </p>
-              )}
-            </div>
           </div>
         </div>
       </section>
