@@ -7,7 +7,6 @@ import {
   getBlogReadTime,
   getBlogRouteId,
   getLinkedTextSegments,
-  shouldRenderHeroImage,
 } from "../data/blogUtils";
 
 const renderLinkedText = (text, links) =>
@@ -30,6 +29,31 @@ const renderContentBlock = (block, index) => {
         <img src={block.src} alt={block.alt || ""} loading="lazy" />
         {block.alt && <figcaption>{block.alt}</figcaption>}
       </figure>
+    );
+  }
+
+  if (block.type === "video") {
+    return (
+      <figure className="Blog_inner_media" key={`${block.src}-${index}`}>
+        <video controls preload="metadata" aria-label={block.title}>
+          <source src={block.src} type="video/mp4" />
+          Your browser does not support embedded video.
+        </video>
+      </figure>
+    );
+  }
+
+  if (block.type === "embed") {
+    return (
+      <div className="Blog_inner_embed" key={`${block.src}-${index}`}>
+        <iframe
+          src={block.src}
+          title={block.title}
+          loading="lazy"
+          allow="autoplay; fullscreen"
+          allowFullScreen
+        />
+      </div>
     );
   }
 
@@ -80,12 +104,6 @@ const Blog_inner_sec = () => {
                 )}
               </div>
             </div>
-
-            {shouldRenderHeroImage(blog) && (
-              <figure className="Blog_inner_image Blog_inner_hero_image">
-                <img src={blog.image} alt={blog.title} loading="eager" />
-              </figure>
-            )}
 
             <div className="Blog_inner_sec_box">
               {blog.content.map(renderContentBlock)}

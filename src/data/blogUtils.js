@@ -1,35 +1,4 @@
-export const ALL_BLOGS_CATEGORY = "All";
 export const DEFAULT_READ_TIME = "5 min read";
-
-export const getBlogCategories = (posts, preferredOrder = []) => {
-  const seenCategories = new Set();
-  const categories = [ALL_BLOGS_CATEGORY];
-
-  const addCategory = (category) => {
-    if (!category || seenCategories.has(category)) {
-      return;
-    }
-
-    seenCategories.add(category);
-    categories.push(category);
-  };
-
-  preferredOrder.forEach(addCategory);
-  posts.forEach((post) => post.category?.forEach(addCategory));
-
-  return categories;
-};
-
-export const isBlogInCategory = (post, category) => {
-  if (category === ALL_BLOGS_CATEGORY) {
-    return true;
-  }
-
-  return Array.isArray(post.category) && post.category.includes(category);
-};
-
-export const filterBlogsByCategory = (posts, category = ALL_BLOGS_CATEGORY) =>
-  posts.filter((post) => isBlogInCategory(post, category));
 
 export const findBlogById = (posts, id = "") => {
   const normalizedId = decodeURIComponent(id).trim();
@@ -55,15 +24,8 @@ export const formatBlogDate = (dateString, locale = "en-US") => {
     year: "numeric",
     month: "long",
     day: "numeric",
+    timeZone: "America/Chicago",
   }).format(date);
-};
-
-export const shouldRenderHeroImage = (blog) => {
-  if (!blog?.image) {
-    return false;
-  }
-
-  return !blog.content?.some((block) => block.type === "image" && block.src === blog.image);
 };
 
 export const getLinkedTextSegments = (text = "", links = []) => {

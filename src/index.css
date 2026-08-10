@@ -1100,6 +1100,29 @@ line-height: 48px; /* 180% */
     padding-top: 10px;
 }
 
+.Blog_inner_media,
+.Blog_inner_embed {
+    width: 100%;
+    margin: 8px 0px 12px 0px;
+}
+
+.Blog_inner_media video,
+.Blog_inner_embed iframe {
+    display: block;
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: rgba(255, 250, 241, 0.72);
+}
+
+.Blog_inner_media video {
+    max-height: 720px;
+}
+
+.Blog_inner_embed iframe {
+    min-height: 520px;
+}
+
 .Blog_inner_quote {
     color: var(--ink);
     font-family: "Poppins";

@@ -1,49 +1,37 @@
 import assert from "node:assert/strict";
+import { existsSync } from "node:fs";
 import test from "node:test";
-import blogPosts, { blogCategories, getBlogById } from "./blogPosts.js";
+import blogPosts, { getBlogById } from "./blogPosts.js";
 import {
-  ALL_BLOGS_CATEGORY,
   DEFAULT_READ_TIME,
-  filterBlogsByCategory,
   findBlogById,
   formatBlogDate,
-  getBlogCategories,
   getRecentBlogPosts,
   getBlogReadTime,
   getBlogRouteId,
   getLinkedTextSegments,
-  shouldRenderHeroImage,
 } from "./blogUtils.js";
 
-test("blog categories include every category used by local posts", () => {
-  const categoriesInPosts = new Set(blogPosts.flatMap((post) => post.category || []));
+test("Wix posts are listed newest first without categories", () => {
+  assert.equal(blogPosts.length, 4);
+  assert.ok(blogPosts.every((post) => post.sourceUrl.startsWith("https://aruneswara.wixsite.com/mysite/post/")));
+  assert.ok(blogPosts.every((post) => !("category" in post)));
 
-  assert.equal(blogCategories[0], ALL_BLOGS_CATEGORY);
-
-  categoriesInPosts.forEach((category) => {
-    assert.ok(blogCategories.includes(category), `${category} should be available as a tab`);
-  });
+  const timestamps = blogPosts.map((post) => new Date(post.date).getTime());
+  assert.deepEqual(timestamps, [...timestamps].sort((first, second) => second - first));
 });
 
-test("preferred categories stay ordered while remaining categories are appended", () => {
-  const categories = getBlogCategories(
-    [
-      { category: ["Writing", "Product"] },
-      { category: ["Communication"] },
-    ],
-    ["Writing"]
+test("inline Wix media is preserved locally with the Ortho video and presentation", () => {
+  const localMedia = blogPosts.flatMap((post) =>
+    post.content.filter((block) => block.type === "image" || block.type === "video")
   );
+  const ortho = blogPosts.find((post) => post.slug.startsWith("ortho-"));
 
-  assert.deepEqual(categories, [ALL_BLOGS_CATEGORY, "Writing", "Product", "Communication"]);
-});
-
-test("blogs can be filtered by category without hiding all posts", () => {
-  const allPosts = filterBlogsByCategory(blogPosts, ALL_BLOGS_CATEGORY);
-  const engineeringPosts = filterBlogsByCategory(blogPosts, "Engineering");
-
-  assert.equal(allPosts.length, blogPosts.length);
-  assert.ok(engineeringPosts.length > 0);
-  assert.ok(engineeringPosts.every((post) => post.category.includes("Engineering")));
+  assert.equal(localMedia.filter((block) => block.type === "image").length, 21);
+  assert.ok(localMedia.every((block) => block.src.startsWith("/blog/")));
+  assert.ok(localMedia.every((block) => existsSync(new URL(`../../public${block.src}`, import.meta.url))));
+  assert.ok(ortho.content.some((block) => block.type === "video"));
+  assert.ok(ortho.content.some((block) => block.type === "embed" && block.src.includes("docs.google.com/presentation")));
 });
 
 test("blogs can be found by id or slug", () => {
@@ -67,15 +55,9 @@ test("blog metadata helpers provide stable route, date, and read-time values", (
   assert.equal(getBlogRouteId({ _id: "fallback-id", slug: "slug-id" }), "slug-id");
   assert.equal(getBlogReadTime({}), DEFAULT_READ_TIME);
   assert.equal(formatBlogDate("2025-07-31T20:24:14.032Z"), "July 31, 2025");
+  assert.equal(formatBlogDate("2025-07-27T05:18:57.966Z"), "July 27, 2025");
+  assert.equal(formatBlogDate("2020-08-26T00:28:53.125Z"), "August 25, 2020");
   assert.equal(formatBlogDate("not a date"), "");
-});
-
-test("hero images are skipped when the same image already appears in the post content", () => {
-  const image = "https://example.com/post.png";
-
-  assert.equal(shouldRenderHeroImage({ image, content: [] }), true);
-  assert.equal(shouldRenderHeroImage({ image, content: [{ type: "image", src: image }] }), false);
-  assert.equal(shouldRenderHeroImage({ content: [{ type: "image", src: image }] }), false);
 });
 
 test("linked text is split into ordered render segments", () => {

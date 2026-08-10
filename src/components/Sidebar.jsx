@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Sidebar = ({ activeSection }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -51,6 +52,10 @@ const Sidebar = ({ activeSection }) => {
               </li>
             ))}
           </ul>
+
+          <Link to="/blogs" onClick={() => setIsOpen(false)}>
+            <button>Blog →</button>
+          </Link>
         </div>
       </div>
     </>

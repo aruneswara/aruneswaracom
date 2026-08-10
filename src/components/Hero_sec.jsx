@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
+import { Link } from "react-router-dom";
 
 import AsciiEarth from "./Animation_code/AsciiEarth";
 import profile from "../data/profile";
@@ -55,6 +56,7 @@ const Hero_sec = () => {
             <p>{profile.tagline}</p>
             <p>{profile.location}</p>
             <div className="hero_sec_btn_box">
+              <Link to="/blogs"><button>Read Blog →</button></Link>
               <a href={`mailto:${profile.contact.emails[0]}`}>
                 <button>Email →</button>
               </a>
