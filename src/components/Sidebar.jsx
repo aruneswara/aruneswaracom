@@ -6,8 +6,9 @@ const Sidebar = ({ activeSection }) => {
 
   const menu = [
     { name: "Home", id: "home" },
-    { name: "What I Work On", id: "work" },
     { name: "Experience", id: "experience" },
+    { name: "Education", id: "education" },
+    { name: "Projects", id: "projects" },
     { name: "Contact", id: "contact" },
   ];
 
