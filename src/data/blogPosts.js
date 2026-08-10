@@ -1,4 +1,5 @@
 import { findBlogById } from "./blogUtils.js";
+import additionalBlogPosts from "./additionalBlogPosts.js";
 
 const blogPosts = [
   {
@@ -483,8 +484,9 @@ const blogPosts = [
         "text": "Thanks For Reading! If you have any questions, or would like to get in contact, you can reach out to me at aruneswara@icloud.com."
       }
     ]
-  }
-];
+  },
+  ...additionalBlogPosts,
+].sort((first, second) => new Date(second.date) - new Date(first.date));
 
 export const getBlogById = (id) => findBlogById(blogPosts, id);
 

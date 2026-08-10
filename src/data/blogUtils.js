@@ -29,13 +29,19 @@ export const formatBlogDate = (dateString, locale = "en-US") => {
 };
 
 export const getLinkedTextSegments = (text = "", links = []) => {
+  const searchOffsets = new Map();
   const linkMatches = links
     .filter((link) => link.text && link.url)
-    .map((link, index) => ({
-      ...link,
-      index,
-      start: text.indexOf(link.text),
-    }))
+    .map((link, index) => {
+      const searchFrom = searchOffsets.get(link.text) || 0;
+      const start = text.indexOf(link.text, searchFrom);
+
+      if (start !== -1) {
+        searchOffsets.set(link.text, start + link.text.length);
+      }
+
+      return { ...link, index, start };
+    })
     .filter((link) => link.start !== -1)
     .sort((first, second) => first.start - second.start || first.index - second.index);
 
