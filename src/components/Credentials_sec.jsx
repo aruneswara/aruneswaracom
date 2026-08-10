@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import profile from "../data/profile";
 
 const Credentials_sec = () => {
@@ -39,9 +38,6 @@ const Credentials_sec = () => {
           ))}
         </div>
 
-        <div className="credential_link">
-          <Link to="/blogs">Read related project writeups →</Link>
-        </div>
       </div>
     </section>
   );

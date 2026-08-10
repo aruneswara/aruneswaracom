@@ -42,7 +42,7 @@ export const profile = {
       role: "Software Engineer",
       period: "2025 - Present",
       location: "San Francisco, California",
-      bullets: ["Building at OpenAI from San Francisco."],
+      bullets: ["Building ChatGPT and Codex."],
     },
     {
       company: "Google",

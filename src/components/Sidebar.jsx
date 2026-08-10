@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 const Sidebar = ({ activeSection }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const menu = [
     { name: "Home", id: "home" },
-    { name: "What I Work On", id: "work" },
     { name: "Experience", id: "experience" },
     { name: "Education", id: "education" },
     { name: "Projects", id: "projects" },
@@ -53,10 +51,6 @@ const Sidebar = ({ activeSection }) => {
               </li>
             ))}
           </ul>
-
-          <Link to="/blogs" onClick={() => setIsOpen(false)}>
-            <button>Blog →</button>
-          </Link>
         </div>
       </div>
     </>

@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import profile from "../data/profile";
 
 const Projects_sec = () => {
@@ -17,9 +16,6 @@ const Projects_sec = () => {
                 <h3>{project.title}</h3>
                 <p>{project.description}</p>
               </div>
-              {project.slug && (
-                <Link to={`/blog-inner/${project.slug}`}>Learn more →</Link>
-              )}
             </article>
           ))}
         </div>

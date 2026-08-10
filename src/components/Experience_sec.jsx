@@ -18,7 +18,7 @@ const Experience_sec = () => {
 
         // Set initial position using GSAP
         gsap.set(titleEl, { opacity: 0, y: 50 });
-        gsap.set(imgEl, { opacity: 0, x: 100 });
+        gsap.set(imgEl, { opacity: 0, x: -100 });
 
         const observer = new IntersectionObserver(
             (entries) => {
@@ -33,11 +33,11 @@ const Experience_sec = () => {
                         const direction = entry.boundingClientRect.top < 0 ? -50 : 50;
 
                         gsap.to(titleEl, { opacity: 0, y: direction, duration: 1, ease: "power2.in" });
-                        gsap.to(imgEl, { opacity: 0, x: 100, duration: 1, ease: "power2.in" });
+                        gsap.to(imgEl, { opacity: 0, x: -100, duration: 1, ease: "power2.in" });
                     }
                 });
             },
-            { threshold: 0.5 }
+            { threshold: 0.1 }
         );
 
         observer.observe(sectionEl);
@@ -50,6 +50,10 @@ const Experience_sec = () => {
             <section ref={sectionRef} id="experience" className="Experience_sec panel">
                 <div className="container">
                     <div className="main_Experience_sec">
+                        <div className="Experience_sec_img_box" ref={imgRef}>
+                            <WaterAscii />
+                        </div>
+
                         <div className="Experience_sec_title"  ref={titleRef}>
                             <h2>Experience</h2>
                             <div className="Experience_sec_box">
@@ -66,10 +70,6 @@ const Experience_sec = () => {
                                     </div>
                                 ))}
                             </div>
-                        </div>
-
-                        <div className="Experience_sec_img_box" ref={imgRef}>
-                            <WaterAscii />
                         </div>
                     </div>
                 </div>

@@ -440,16 +440,22 @@ button {
 
 .main_Experience_sec {
     width: 100%;
-    display: block;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 48px;
     padding: 90px 0px;
 }
 
 .Experience_sec_title {
-    width: 100%;
+    width: 58%;
 }
 
 .Experience_sec_img_box {
-    display: none;
+    display: block;
+    width: 38%;
+    position: sticky;
+    top: 90px;
 }
 
 .Experience_sec_title h2 {
@@ -464,7 +470,7 @@ button {
 .Experience_sec_box {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 28px 34px;
     padding-top: 34px;
 }
@@ -1863,6 +1869,7 @@ section.Blog_Sec {
 
 .Experience_sec_img_box {
     width: 100%;
+    position: static;
 }
 
 section.Experience_sec {
@@ -1883,10 +1890,6 @@ section.Get_in_touch_sec {
 
 .resume_section_header h2 {
     font-size: 24px;
-}
-
-.Experience_sec_img_box {
-    display: none;
 }
 
 .Experience_sec_box,
