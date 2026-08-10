@@ -13,12 +13,26 @@ import {
 } from "./blogUtils.js";
 
 test("Wix posts are listed newest first without categories", () => {
-  assert.equal(blogPosts.length, 4);
+  assert.equal(blogPosts.length, 9);
   assert.ok(blogPosts.every((post) => post.sourceUrl.startsWith("https://aruneswara.wixsite.com/mysite/post/")));
   assert.ok(blogPosts.every((post) => !("category" in post)));
 
   const timestamps = blogPosts.map((post) => new Date(post.date).getTime());
   assert.deepEqual(timestamps, [...timestamps].sort((first, second) => second - first));
+  assert.deepEqual(
+    blogPosts.map((post) => post.title),
+    [
+      "you're the problem",
+      "there's no such thing as free will",
+      "Ribbon: Transform Chrome into a seamless shortcut-based, mouse-less experience",
+      "LyricLearner: An AI Music Generator and Interpreter",
+      "MediData: Bringing the Hospital to You",
+      "A Letter to My Future Self",
+      "BioProtect: A Phased Array Spatial Sensor for Visual Detection and Assistance",
+      "Ortho, An Intelligent Exoskeleton: Powered Orthosis via Neural Network for Rehabilitative Assistance",
+      "An Open Letter to Incoming High School Seniors",
+    ]
+  );
 });
 
 test("inline Wix media is preserved locally with the Ortho video and presentation", () => {
@@ -27,11 +41,13 @@ test("inline Wix media is preserved locally with the Ortho video and presentatio
   );
   const ortho = blogPosts.find((post) => post.slug.startsWith("ortho-"));
 
-  assert.equal(localMedia.filter((block) => block.type === "image").length, 21);
+  assert.equal(localMedia.filter((block) => block.type === "image").length, 41);
   assert.ok(localMedia.every((block) => block.src.startsWith("/blog/")));
   assert.ok(localMedia.every((block) => existsSync(new URL(`../../public${block.src}`, import.meta.url))));
   assert.ok(ortho.content.some((block) => block.type === "video"));
   assert.ok(ortho.content.some((block) => block.type === "embed" && block.src.includes("docs.google.com/presentation")));
+  assert.ok(blogPosts.some((post) => post.content.some((block) => block.type === "list")));
+  assert.ok(blogPosts.some((post) => post.content.some((block) => block.type === "embed" && block.src.includes("usrfiles.com"))));
 });
 
 test("blogs can be found by id or slug", () => {
@@ -72,4 +88,19 @@ test("linked text is split into ordered render segments", () => {
     { type: "text", text: " and " },
     { type: "link", text: "source", url: "https://example.com/source" },
   ]);
+});
+
+test("repeated linked text maps to successive occurrences", () => {
+  const segments = getLinkedTextSegments("Code is here and docs are here", [
+    { text: "here", url: "https://example.com/code" },
+    { text: "here", url: "https://example.com/docs" },
+  ]);
+
+  assert.deepEqual(
+    segments.filter((segment) => segment.type === "link"),
+    [
+      { type: "link", text: "here", url: "https://example.com/code" },
+      { type: "link", text: "here", url: "https://example.com/docs" },
+    ]
+  );
 });

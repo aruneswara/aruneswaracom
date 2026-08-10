@@ -1056,6 +1056,20 @@ line-height: 48px; /* 180% */
     line-height: 32px;
 }
 
+.Blog_inner_list {
+    width: 100%;
+    margin: 0;
+    padding-left: 26px;
+    color: var(--ink);
+    font-family: "Poppins";
+    font-size: 16px;
+    line-height: 32px;
+}
+
+.Blog_inner_list li + li {
+    margin-top: 18px;
+}
+
 .Blog_inner_link {
     width: 100%;
     padding: 15px;

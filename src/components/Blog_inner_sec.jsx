@@ -57,6 +57,16 @@ const renderContentBlock = (block, index) => {
     );
   }
 
+  if (block.type === "list") {
+    return (
+      <ul className="Blog_inner_list" key={`list-${index}`}>
+        {block.items.map((item, itemIndex) => (
+          <li key={`${item}-${itemIndex}`}>{item}</li>
+        ))}
+      </ul>
+    );
+  }
+
   return (
     <div className="Blog_inner_box blog_post_content" key={`${block.text}-${index}`}>
       <p>{renderLinkedText(block.text, block.links)}</p>
