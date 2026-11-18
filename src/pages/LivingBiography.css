@@ -3,10 +3,7 @@
   src: url("../font/Crimson_Text/CrimsonText-Regular.ttf") format("truetype");
 }
 
-.app-shell--immersive {
-  min-height: 100vh;
-  background: #d8ff44;
-}
+.app-shell--immersive { min-height: 100vh; background: #d8ff44; }
 
 .living-bio {
   --acid: #d8ff44;
@@ -18,7 +15,7 @@
   color: var(--black);
   background: var(--acid);
   font-family: "JetBrainsMono", monospace;
-  transition: background 180ms ease;
+  transition: background 160ms ease;
   touch-action: none;
 }
 
@@ -45,84 +42,100 @@
   text-transform: uppercase;
   font-size: 10px;
   letter-spacing: 0.12em;
+  pointer-events: none;
 }
 
 .living-bio__meta { top: 0; border-bottom: 1px solid currentColor; }
 .living-bio__instructions { bottom: 0; border-top: 1px solid currentColor; }
 .living-bio__status { opacity: 0.5; }
 
-.living-bio__canvas {
-  position: relative;
+.living-bio__frame {
+  position: absolute;
   z-index: 1;
-  width: min(1160px, calc(100% - 44px));
-  min-height: 100svh;
-  margin: 0 auto;
-  padding: 18vh 0 14vh;
-  display: grid;
-  grid-template-columns: minmax(270px, 0.85fr) minmax(320px, 1.15fr);
-  gap: clamp(32px, 8vw, 120px);
-  align-items: start;
+  top: 64px;
+  left: 22px;
+  width: var(--frame-width);
+  height: var(--frame-height);
+  overflow: hidden;
+  border-right: 1px solid currentColor;
+  border-bottom: 1px solid currentColor;
+  transition: background 120ms ease;
+}
+
+.living-bio__frame::before,
+.living-bio__frame::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.16;
+  background: currentColor;
+}
+
+.living-bio__frame::before {
+  top: calc(64px + var(--frame-height));
+  left: 0;
+  right: 0;
+  height: 1px;
+}
+
+.living-bio__frame::after {
+  top: 64px;
+  bottom: 44px;
+  left: calc(22px + var(--frame-width));
+  width: 1px;
+}
+
+.living-bio__copy {
+  width: max(260px, var(--frame-width));
+  min-height: var(--frame-height);
+  padding: clamp(20px, 3.5vw, 54px);
+  columns: 280px auto;
+  column-gap: clamp(24px, 4vw, 64px);
 }
 
 .living-bio h1 {
-  position: sticky;
-  top: 18vh;
+  column-span: all;
+  margin: 0 0 clamp(22px, 4vh, 52px);
   font-family: "LivingSerif", Georgia, serif;
-  font-size: clamp(68px, 11vw, 178px);
+  font-size: clamp(62px, 10vw, 164px);
   font-weight: 400;
-  line-height: 0.75;
+  line-height: 0.78;
   letter-spacing: -0.075em;
-  transition: opacity 160ms ease, filter 160ms ease, transform 160ms ease;
+  white-space: nowrap;
 }
 
-.living-bio h1.is-erased {
-  opacity: 0;
-  filter: blur(12px);
-  transform: translateX(-22px);
-}
-
-.living-bio__fragments {
-  display: flex;
-  flex-direction: column-reverse;
-  gap: 18px;
-  padding-top: 3px;
-}
-
-.living-bio__fragments p {
-  max-width: 36ch;
+.living-bio__copy p {
+  break-inside: avoid;
+  margin: 0 0 0.8em;
   font-family: "LivingSerif", Georgia, serif;
-  font-size: clamp(24px, 3.15vw, 50px);
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  animation: bio-arrive 360ms cubic-bezier(.2,.8,.2,1) both;
-  animation-delay: var(--delay);
+  font-size: clamp(20px, 2.25vw, 35px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  animation: bio-arrive 220ms ease-out both;
 }
 
-.living-bio__fragments p:not(:first-child) { opacity: 0.72; }
-.living-bio__fragments p:nth-child(n + 6) { opacity: 0.36; }
-.living-bio__ghost { font-style: italic; opacity: 0.35 !important; }
+.living-bio__corner {
+  position: absolute;
+  right: -5px;
+  bottom: -5px;
+  width: 11px;
+  height: 11px;
+  background: currentColor;
+  transform: rotate(45deg);
+}
 
 @keyframes bio-arrive {
-  from { opacity: 0; transform: translateX(20px); filter: blur(4px); }
+  from { opacity: 0; filter: blur(4px); }
 }
 
 @media (max-width: 720px) {
-  .living-bio__canvas {
-    grid-template-columns: 1fr;
-    gap: 56px;
-    padding-top: 14vh;
-  }
-
-  .living-bio h1 {
-    position: relative;
-    top: auto;
-    font-size: clamp(68px, 22vw, 110px);
-  }
-
-  .living-bio__fragments p { max-width: none; font-size: clamp(26px, 8vw, 42px); }
   .living-bio__status { display: none; }
+  .living-bio__copy { columns: 180px auto; padding: 22px; }
+  .living-bio h1 { font-size: clamp(56px, 19vw, 100px); white-space: normal; }
+  .living-bio__copy p { font-size: clamp(20px, 6.5vw, 31px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .living-bio, .living-bio h1, .living-bio__fragments p { transition: none; animation: none; }
+  .living-bio, .living-bio__frame, .living-bio__copy p { transition: none; animation: none; }
 }
