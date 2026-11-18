@@ -54,16 +54,14 @@
   z-index: 1;
   top: 64px;
   left: 22px;
-  width: var(--frame-width);
+  right: 22px;
   height: var(--frame-height);
   overflow: hidden;
-  border-right: 1px solid currentColor;
   border-bottom: 1px solid currentColor;
-  transition: background 120ms ease;
+  transition: height 45ms linear, background 120ms ease;
 }
 
-.living-bio__frame::before,
-.living-bio__frame::after {
+.living-bio__frame::before {
   content: "";
   position: fixed;
   z-index: -1;
@@ -79,23 +77,13 @@
   height: 1px;
 }
 
-.living-bio__frame::after {
-  top: 64px;
-  bottom: 44px;
-  left: calc(22px + var(--frame-width));
-  width: 1px;
-}
-
 .living-bio__copy {
-  width: max(260px, var(--frame-width));
+  width: 100%;
   min-height: var(--frame-height);
   padding: clamp(20px, 3.5vw, 54px);
-  columns: 280px auto;
-  column-gap: clamp(24px, 4vw, 64px);
 }
 
 .living-bio h1 {
-  column-span: all;
   margin: 0 0 clamp(22px, 4vh, 52px);
   font-family: "LivingSerif", Georgia, serif;
   font-size: clamp(62px, 10vw, 164px);
@@ -105,24 +93,29 @@
   white-space: nowrap;
 }
 
-.living-bio__copy p {
-  break-inside: avoid;
-  margin: 0 0 0.8em;
+.living-bio__stream {
+  max-width: 52ch;
+  margin: 0;
   font-family: "LivingSerif", Georgia, serif;
   font-size: clamp(20px, 2.25vw, 35px);
-  line-height: 1.02;
+  line-height: 1.08;
   letter-spacing: -0.03em;
-  animation: bio-arrive 220ms ease-out both;
+}
+
+.living-bio__stream span { display: inline; }
+
+.living-bio__stream span.is-new {
+  animation: bio-arrive 180ms ease-out both;
 }
 
 .living-bio__corner {
   position: absolute;
-  right: -5px;
+  left: 50%;
   bottom: -5px;
   width: 11px;
   height: 11px;
   background: currentColor;
-  transform: rotate(45deg);
+  transform: translateX(-50%) rotate(45deg);
 }
 
 @keyframes bio-arrive {
@@ -131,11 +124,11 @@
 
 @media (max-width: 720px) {
   .living-bio__status { display: none; }
-  .living-bio__copy { columns: 180px auto; padding: 22px; }
+  .living-bio__copy { padding: 22px; }
   .living-bio h1 { font-size: clamp(56px, 19vw, 100px); white-space: normal; }
-  .living-bio__copy p { font-size: clamp(20px, 6.5vw, 31px); }
+  .living-bio__stream { font-size: clamp(20px, 6.5vw, 31px); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .living-bio, .living-bio__frame, .living-bio__copy p { transition: none; animation: none; }
+  .living-bio, .living-bio__frame, .living-bio__stream span { transition: none; animation: none; }
 }
