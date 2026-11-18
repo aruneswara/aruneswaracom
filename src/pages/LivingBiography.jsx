@@ -19,8 +19,9 @@ const seeds = [
 
 const openings = ["Arun", "He", "A software engineer", "A curious builder", "Somewhere in San Francisco, Arun"];
 const bridges = ["also", "meanwhile", "sometimes", "in another version of the story", "more recently"];
+const initialFragments = [profile.tagline, "This biography is not fixed. Its edges decide how much can be remembered."];
 
-function makeFragment(index) {
+function makeFragment() {
   const seed = seeds[Math.floor(Math.random() * seeds.length)];
   const opening = openings[Math.floor(Math.random() * openings.length)];
   const bridge = bridges[Math.floor(Math.random() * bridges.length)];
@@ -29,103 +30,87 @@ function makeFragment(index) {
     `${seed.charAt(0).toUpperCase()}${seed.slice(1)}; ${bridge}, the work keeps changing shape.`,
     `${opening} ${seed}, following curiosity wherever it becomes concrete.`,
   ];
-  return { id: `${Date.now()}-${index}-${Math.random()}`, text: variants[Math.floor(Math.random() * variants.length)] };
+  return variants[Math.floor(Math.random() * variants.length)];
 }
 
-const initialFragments = [
-  { id: "intro-1", text: profile.tagline },
-  { id: "intro-2", text: "This biography is not fixed. Move through it and the story changes." },
-];
+function getCapacity(width, height) {
+  return Math.max(0, Math.min(30, Math.floor((width * height) / 34000)));
+}
 
 export default function LivingBiography() {
   const [fragments, setFragments] = useState(initialFragments);
-  const [titleVisible, setTitleVisible] = useState(true);
+  const [frame, setFrame] = useState({ width: 620, height: 520 });
   const [pulse, setPulse] = useState("idle");
-  const lastPoint = useRef(null);
-  const distance = useRef(0);
-  const sequence = useRef(0);
-  const restoreTimer = useRef(null);
+  const previous = useRef(null);
 
-  const addText = useCallback(() => {
-    setFragments((current) => [...current.slice(-15), makeFragment(sequence.current++)]);
-    setPulse("write");
-  }, []);
+  const resizeBiography = useCallback((clientX, clientY) => {
+    const width = Math.max(42, Math.min(window.innerWidth - 22, clientX - 22));
+    const height = Math.max(42, Math.min(window.innerHeight - 108, clientY - 64));
+    const next = { width, height };
+    const prior = previous.current;
+    previous.current = next;
+    setFrame(next);
+    if (!prior) return;
 
-  const removeText = useCallback(() => {
+    const horizontalShrank = width < prior.width - 5;
+    const verticalShrank = height < prior.height - 5;
+    const horizontalGrew = width > prior.width + 5;
+    const verticalGrew = height > prior.height + 5;
+    const capacity = getCapacity(width, height);
+
     setFragments((current) => {
-      if (current.length > 0) return current.slice(0, -1);
-      setTitleVisible(false);
-      window.clearTimeout(restoreTimer.current);
-      restoreTimer.current = window.setTimeout(() => setTitleVisible(true), 900);
+      if (horizontalShrank || verticalShrank) {
+        setPulse("erase");
+        return current.slice(0, Math.min(current.length, capacity));
+      }
+
+      if (horizontalGrew || verticalGrew) {
+        setPulse("write");
+        const additions = Math.max(0, capacity - current.length);
+        return [...current, ...Array.from({ length: additions }, makeFragment)];
+      }
+
       return current;
     });
-    setPulse("erase");
   }, []);
 
-  const handleMovement = useCallback((clientX, clientY) => {
-    const previous = lastPoint.current;
-    lastPoint.current = { x: clientX, y: clientY };
-    if (!previous) return;
-
-    const dx = clientX - previous.x;
-    const dy = clientY - previous.y;
-    distance.current += Math.hypot(dx, dy);
-    if (distance.current < 68) return;
-    distance.current = 0;
-
-    if (Math.abs(dx) >= Math.abs(dy)) {
-      if (dx > 0) addText();
-      else removeText();
-    } else if (dy < 0) {
-      addText();
-    } else {
-      removeText();
-    }
-  }, [addText, removeText]);
-
   useEffect(() => {
-    const idle = window.setTimeout(() => setPulse("idle"), 260);
+    const idle = window.setTimeout(() => setPulse("idle"), 220);
     return () => window.clearTimeout(idle);
-  }, [fragments, titleVisible]);
-
-  useEffect(() => () => window.clearTimeout(restoreTimer.current), []);
+  }, [frame]);
 
   const wordCount = useMemo(
-    () => fragments.reduce((total, fragment) => total + fragment.text.split(/\s+/).length, 0),
+    () => fragments.reduce((total, fragment) => total + fragment.split(/\s+/).length, 0),
     [fragments]
   );
 
   return (
     <main
       className={`living-bio living-bio--${pulse}`}
-      onMouseMove={(event) => handleMovement(event.clientX, event.clientY)}
-      onTouchMove={(event) => {
-        const touch = event.touches[0];
-        if (touch) handleMovement(touch.clientX, touch.clientY);
-      }}
+      onPointerMove={(event) => resizeBiography(event.clientX, event.clientY)}
     >
       <div className="living-bio__noise" aria-hidden="true" />
       <header className="living-bio__meta">
         <span>an unstable biography</span>
-        <span>{String(wordCount).padStart(3, "0")} words</span>
+        <span>{Math.round(frame.width)} × {Math.round(frame.height)} / {String(wordCount).padStart(3, "0")} words</span>
       </header>
 
-      <section className="living-bio__canvas" aria-live="polite">
-        <h1 className={titleVisible ? "" : "is-erased"}>{profile.name}</h1>
-        <div className="living-bio__fragments">
-          {fragments.map((fragment, index) => (
-            <p key={fragment.id} style={{ "--delay": `${Math.min(index, 8) * 22}ms` }}>
-              {fragment.text}
-            </p>
-          ))}
-          {fragments.length === 0 && <p className="living-bio__ghost">keep erasing</p>}
+      <section
+        className="living-bio__frame"
+        style={{ "--frame-width": `${frame.width}px`, "--frame-height": `${frame.height}px` }}
+        aria-live="polite"
+      >
+        <div className="living-bio__copy">
+          <h1>{profile.name}</h1>
+          {fragments.map((fragment, index) => <p key={`${fragment}-${index}`}>{fragment}</p>)}
         </div>
+        <span className="living-bio__corner" aria-hidden="true" />
       </section>
 
       <footer className="living-bio__instructions">
-        <span>← erase</span>
-        <span className="living-bio__status">{pulse === "write" ? "writing" : pulse === "erase" ? "forgetting" : "move the cursor"}</span>
-        <span>generate →</span>
+        <span>shrink to forget</span>
+        <span className="living-bio__status">{pulse === "write" ? "generating" : pulse === "erase" ? "deleting" : "the cursor sets the margin"}</span>
+        <span>expand to generate</span>
       </footer>
     </main>
   );
