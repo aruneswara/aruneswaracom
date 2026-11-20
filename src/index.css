@@ -1825,9 +1825,23 @@ section.Blog_Sec {
 
 
 @media screen and (max-width: 768px) {
+.Page_layout {
+    scroll-snap-type: none;
+}
+
+.section,
+.section > section {
+    min-height: auto;
+    align-items: stretch;
+}
+
+.section > section {
+    padding: 56px 0px;
+}
+
     .main_hero_sec {
     flex-direction: column;
-    padding: 40px 0px;
+    padding: 16px 0px;
     gap: 25px;
 }
 
@@ -1864,7 +1878,7 @@ section.Blog_Sec {
 .main_work_on {
     flex-direction: column;
     gap: 30px;
-    padding: 25px 0px;
+    padding: 0px;
     justify-content: flex-end;
 }
 
@@ -1897,7 +1911,7 @@ section.Blog_Sec {
     max-height: none;
     flex-direction: column;
     gap: 25px;
-    padding: 96px 0px 48px;
+    padding: 0px;
 }
 
 .artwork-wrapper {
@@ -1925,8 +1939,8 @@ section.Experience_sec {
 
 section.Get_in_touch_sec {
     height: auto;
-    min-height: 100vh;
-    padding: 96px 0px 60px;
+    min-height: auto;
+    padding: 56px 0px;
 }
 
 .credentials_grid,
@@ -2104,7 +2118,7 @@ pre.ascii-canvas {
     width: 100%;
 }
 .main_hero_sec {
-    padding: 40px 0px;
+    padding: 0px;
     gap: 20px;
 }
 
@@ -2128,7 +2142,7 @@ pre.ascii-canvas {
 }
 
 .main_work_on {
-    padding: 40px 0px;
+    padding: 0px;
 }
 
 .Experience_sec_title h2 {
